@@ -22,7 +22,7 @@ btnSend.addEventListener("click", event => {
     }
   })
     .then(res => {
-      if (res.data === "success") {
+      if (res.status === 200) {
         window.alert("Mensagem enviada com sucesso");
       } else {
         window.alert("dados invalidos, favor verificar");

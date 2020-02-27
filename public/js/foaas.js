@@ -18,10 +18,13 @@ elements.forEach(btn => {
         "content-type": "application/json"
       }
     }).then(res => {
-      event.preventDefault();
-      if (res.data === "success") {
-        window.alert("mensagem enviada com sucesso");
-      } else window.alert("mensagem não enviada, favor verificar campos");
+      console.log(res);
+      if (res.status === 200) {
+        window.alert("Mensagem enviada com sucesso");
+      } else if (res.status === 201) {
+        window.alert(res.data);
+      } else window.alert("Falha na API");
     });
+    event.preventDefault();
   });
 });

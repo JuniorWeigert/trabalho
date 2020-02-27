@@ -1,8 +1,7 @@
-const Saved = require("../db/index");
+const RepositoryAccess = require("../db/repository_access");
 
 class MessageAuth {
   static validateMessage(sender, receiver, subject, bodyMessage) {
-    let isValid = false;
     console.log("vendo se os campos esta vazios");
     if (
       !(
@@ -13,13 +12,15 @@ class MessageAuth {
       )
     ) {
       console.log("vendo se esta registrado");
-      if (Saved.isRegistered(sender) && Saved.isRegistered(receiver)) {
+      if (
+        RepositoryAccess.isRegistered(sender) &&
+        RepositoryAccess.isRegistered(receiver)
+      ) {
         if (sender.toString() === receiver.toString()) {
-          isValid = false;
-        } else isValid = true;
+          return false;
+        } else return true;
       }
     }
-    return isValid;
   }
 }
 

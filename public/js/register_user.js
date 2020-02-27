@@ -1,5 +1,3 @@
-const baseURL = "http://localhost:3000/";
-
 let name = document.querySelector("#nome");
 let code = document.querySelector("#code");
 let btnRecord = document.querySelector("#btn-cad");
@@ -17,13 +15,9 @@ btnRecord.addEventListener("click", event => {
     }
   })
     .then(res => {
-      console.log(res);
-      if (res.data === "success") {
-        window.alert("Usuario cadastrado com Sucesso");
-      } else {
-        window.alert("Cadastro invalido, Favor verificar dados!");
-      }
-      event.preventDefault();
+      if (res.status !== 200) {
+        window.alert("Dados invalidos");
+      } else window.alert("Usuario cadastrado com sucesso");
     })
     .catch(err => {
       console.log(err);

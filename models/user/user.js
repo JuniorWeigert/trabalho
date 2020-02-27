@@ -1,32 +1,32 @@
 class User {
   constructor(name, code) {
-    this.name = name;
-    this.code = code;
-    this.receivedMessage = [];
-    this.sendedMessage = [];
+    this._name = name;
+    this._code = code;
+    this._receivedMessage = [];
+    this._sendedMessage = [];
   }
 
   getName() {
-    return this.name;
+    return this._name;
   }
 
   getCode() {
-    return this.code;
+    return this._code;
   }
   getReceivedMessage() {
-    return this.receivedMessage;
+    return this._receivedMessage;
   }
 
   setReceivedMessage(message) {
-    this.receivedMessage.push(message);
+    this._receivedMessage.push(message);
   }
 
   getSendedMessage() {
-    return this.sendedMessage;
+    return this._sendedMessage;
   }
 
   setSendedMessage(message) {
-    this.sendedMessage.push(message);
+    this._sendedMessage.push(message);
   }
 }
 
