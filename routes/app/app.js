@@ -31,12 +31,21 @@ router.get("/sendHot.html", (req, res) => {
 // ******** POST ******** //
 
 // Post para envio de mensagem
-router.post("/send", (req, res) => Message.handler(req, res));
+router.post("/send", (req, res) => {
+  let message = new Message();
+  return message.handler(req, res);
+});
 
 // Post para cadastramento de Usuario
-router.post("/record", (req, res) => User.handler(req, res));
+router.post("/record", (req, res) => {
+  let user = new User();
+  return user.handler(req, res);
+});
 
 // Post para busca de historico de mensagens
-router.post("/history", (req, res) => History.handler(req, res));
+router.post("/history", (req, res) => {
+  let history = new History();
+  return history.handler(req, res);
+});
 
 module.exports = router;

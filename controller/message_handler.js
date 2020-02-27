@@ -1,7 +1,7 @@
 const SaveMessage = require("../models/message/save_message");
 
 class Handler {
-  static handler(req, res) {
+  handler(req, res) {
     let messageData = req.body;
     if (
       SaveMessage.sendMessage(
