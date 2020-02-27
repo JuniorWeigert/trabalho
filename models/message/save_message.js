@@ -3,7 +3,7 @@ const Message = require("./message");
 const RepositoryAccess = require("../../db/repository_access");
 
 class SaveMessage {
-  static sendMessage(sender, receiver, subject, bodyMessage) {
+  sendMessage(sender, receiver, subject, bodyMessage) {
     if (Authenticator.validateMessage(sender, receiver, subject, bodyMessage)) {
       //criando objeto e modificando dados da mensagem
       let newMessage = new Message(sender, receiver, subject, bodyMessage);

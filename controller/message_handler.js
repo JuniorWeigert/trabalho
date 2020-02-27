@@ -1,10 +1,11 @@
 const SaveMessage = require("../models/message/save_message");
+let message = new SaveMessage();
 
 class Handler {
   handler(req, res) {
     let messageData = req.body;
     if (
-      SaveMessage.sendMessage(
+      message.sendMessage(
         messageData.sender,
         messageData.receiver,
         messageData.subject,

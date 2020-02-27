@@ -2,9 +2,10 @@ const axios = require("axios");
 const RepositoryAccess = require("../../db/repository_access");
 const saveMessage = require("../../models/message/save_message");
 let BASE_URL = "http://foaas.com";
+let message = new saveMessage();
 
 class Handler {
-  static handler(req, res) {
+  handler(req, res) {
     if (
       RepositoryAccess.isRegistered(req.body.sender) &&
       RepositoryAccess.isRegistered(req.body.receiver)
@@ -37,7 +38,7 @@ class Handler {
         }).then(resp => {
           console.log(resp.data, resp.status);
           res.status(resp.status).send(resp.data);
-          saveMessage.sendMessage(
+          message.sendMessage(
             req.body.sender,
             req.body.receiver,
             req.body.subject,
