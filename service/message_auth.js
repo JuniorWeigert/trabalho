@@ -1,7 +1,7 @@
 const RepositoryAccess = require("../db/repository_access");
 
 class MessageAuth {
-  static validateMessage(sender, receiver, subject, bodyMessage) {
+  validateMessage(sender, receiver, subject, bodyMessage) {
     console.log("vendo se os campos esta vazios");
     if (
       !(

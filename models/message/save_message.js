@@ -1,10 +1,11 @@
 const Authenticator = require("../../service/message_auth");
 const Message = require("./message");
 const RepositoryAccess = require("../../db/repository_access");
+let authenticator = new Authenticator();
 
 class SaveMessage {
   sendMessage(sender, receiver, subject, bodyMessage) {
-    if (Authenticator.validateMessage(sender, receiver, subject, bodyMessage)) {
+    if (authenticator.validateMessage(sender, receiver, subject, bodyMessage)) {
       //criando objeto e modificando dados da mensagem
       let newMessage = new Message(sender, receiver, subject, bodyMessage);
       console.log(newMessage);

@@ -21,9 +21,8 @@ class RepositoryAccess {
   static getUserIndex(code) {
     console.log("dentro do get index");
     console.log(Repository.getUsers());
-    let repo = this.getUser();
-    for (let index = 0; index < repo.length; index++) {
-      if (repo[index].getCode() === code) {
+    for (let index = 0; index < this.getUser().length; index++) {
+      if (this.getUser()[index].getCode() === code) {
         return index;
       }
     }
