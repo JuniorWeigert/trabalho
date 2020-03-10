@@ -13,8 +13,10 @@ app.use(bodyParser.json());
 app.use(Express.static("./public"));
 app.use(appRouter);
 app.use(apiRouter);
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
 
-app.set("views", "./public");
+app.set("views", "./public/views");
 
 app.listen(3000, () => {
   console.log("Rodando");
