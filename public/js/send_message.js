@@ -20,17 +20,25 @@ btnSend.addEventListener("click", event => {
       }
     })
       .then(res => {
+        console.log(res.status);
         if (res.status === 200) {
-          window.alert("Mensagem enviada com sucesso");
+          alert("Mensagem enviada com sucesso!");
         } else {
-          window.alert("dados invalidos, favor verificar");
+          alert("Mensagem não enviada, favor verificar campos");
         }
-        event.preventDefault();
+        
       })
       .catch(err => {
         console.log(err);
       });
-  } else alert("Campos vazios, impossivel enviar mensagem!");
+  } else{
+    alert('campos vazios, impossivel enviar mensagem');
+  }
+    sender.value = '';
+    receiver.value = '';
+    subject.value = '';
+    bodyMessage.value = '';
+    event.preventDefault();
 });
 
 function verifyCamps() {

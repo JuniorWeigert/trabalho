@@ -1,7 +1,6 @@
 //Importando modulos
-const UserService = require("../user/user_service");
-const MessageService = require("../message/message_service");
-const RepositoryService = require("../repository/repository_service");
+const UserService = require("../app/user/user_service");
+const MessageService = require("../app/message/message_service");
 const axios = require("axios");
 //Link da API
 const URL = "https://foaas.com";
@@ -29,8 +28,8 @@ class apiService {
   }
 
   editPath(req) {
-    let senderName = RepositoryService.getUserName(req.body.sender);
-    let receiverName = RepositoryService.getUserName(req.body.receiver);
+    let senderName = userService.getUserNameByCode(req.body.sender);
+    let receiverName = userService.getUserNameByCode(req.body.receiver);
     switch (req.body.message) {
       case "btn-awe":
         PATH = `/awesome/${senderName}`;

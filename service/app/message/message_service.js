@@ -1,20 +1,24 @@
-const Message = require("../../models/message/message");
-const RepositoryService = require("../repository/repository_service");
+const Message = require("../../../models/message/message");
+const MessageRepository = require("../../../repository/message_repository");
+const UserRepository = require("../../../repository/user_repository");
 
 class MessageService {
   sendMessage(sender, receiver, subject, bodyMessage) {
     if (this.validateMessage(sender, receiver, subject, bodyMessage)) {
       let newMessage = new Message(sender, receiver, subject, bodyMessage);
       this.saveMessage(newMessage);
+      console.log('mensagem enviada');
+      console.log(MessageRepository.getAllMessage());
       return true;
     } else return false;
+    
   }
 
   saveMessage(message) {
-    RepositoryService.saveMessage(message);
-    message.setSenderName(RepositoryService.getUserName(message.getSender()));
+    MessageRepository.saveMessage(message);
+    message.setSenderName(UserRepository.getUserNameByCode(message.getSender()));
     message.setReceiverName(
-      RepositoryService.getUserName(message.getReceiver())
+      UserRepository.getUserNameByCode(message.getReceiver())
     );
   }
   validateMessage(sender, receiver, subject, bodyMessage) {
@@ -43,7 +47,7 @@ class MessageService {
   }
 
   validateUsers(code) {
-    return RepositoryService.userExists(code);
+    return UserRepository.isRegistered(code) ? true : false;
   }
 
   isSame(sender, receiver) {

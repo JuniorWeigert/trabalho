@@ -1,5 +1,5 @@
-const User = require("../../models/user/user");
-const RepositoryService = require("../repository/repository_service");
+const User = require("../../../models/user/user");
+const UserRepository = require("../../../repository/user_repository");
 
 class UserService {
   createUser(name, code) {
@@ -14,14 +14,18 @@ class UserService {
     } else return false;
   }
 
+  getUserNameByCode(code){
+    return UserRepository.getUserNameByCode(code);
+  }
+
   saveUser(user) {
-    RepositoryService.saveUser(user);
+    UserRepository.saveUser(user);
   }
 
   validateNewUser(name, code) {
     if (name !== "" && code !== "") {
       if (!(name.length < 3 || code.toString().length < 4)) {
-        if (RepositoryService.listAllUsers().length < 1) {
+        if (UserRepository.getAllUsers().length < 1) {
           return true;
         } else if (!this.isRegistered(code)) {
           return true;
@@ -33,7 +37,7 @@ class UserService {
   }
 
   isRegistered(code) {
-    return RepositoryService.userExists(code);
+    return UserRepository.isRegistered(code) ? true : false;
   }
 }
 

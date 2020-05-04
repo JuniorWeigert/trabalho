@@ -1,11 +1,11 @@
-const MessageService = require("../../service/message/message_service");
-let message = new MessageService();
+const MessageService = require("../../service/app/message/message_service");
+let messageService = new MessageService();
 
 class MessageController {
   messageHandler(req, res) {
     let messageData = req.body;
     if (
-      message.sendMessage(
+      messageService.sendMessage(
         messageData.sender,
         messageData.receiver,
         messageData.subject,

@@ -16,19 +16,20 @@ btnSearch.addEventListener("click", event => {
       }
     })
       .then(res => {
-        console.log(res.data);
-        for (let index in res.data) {
-          messageContainer.innerHTML += `<div class="message">
-        <b>Assunto: </b> <span id="subject">${res.data[index]._subject}</span>
+        console.log(res.data)
+        for (let index in res.data.sendedMessages) {
+          for(let j in res.data.sendedMessages[index])
+        messageContainer.innerHTML += `<div class="message">
+        <b>Assunto: </b> <span id="subject">${res.data.sendedMessages[index][j]._subject}</span>
         <br />
         <b>Enviada por: </b>
-        <span id="sender-name">${res.data[index]._senderName}</span> | <b>Recebida por: </b>
+        <span id="sender-name">${res.data.sendedMessages[index][j]._senderName}</span> | <b>Recebida por: </b>
   
-        <span id="receiver-name">${res.data[index]._receiverName}</span>
+        <span id="receiver-name">${res.data.sendedMessages[index][j]._receiverName}</span>
         <br />
         <b>Message: </b>
         <br />
-        <span id="body-message">${res.data[index]._bodyMessage}</span>
+        <span id="body-message">${res.data.sendedMessages[index][j]._bodyMessage}</span>
         </div>
         `;
         }

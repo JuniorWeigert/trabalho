@@ -17,11 +17,26 @@ btnRecord.addEventListener("click", event => {
     })
       .then(res => {
         if (res.status !== 200) {
-          window.alert("Dados invalidos");
-        } else window.alert("Usuario cadastrado com sucesso");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Cliente cadastrado ou dados invalidos!"
+          });
+        } else {
+          Swal.fire("Sucesso!", "Cliente cadastrado com sucesso!", "success");
+        }
       })
       .catch(err => {
         console.log(err);
       });
-  } else alert("Campos vazios, impossivel cadastrar!");
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Campos vazios, impossivel cadastrar!"
+    });
+  }
+  name.value = "";
+  code.value = "";
+  event.preventDefault();
 });
