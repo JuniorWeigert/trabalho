@@ -3,14 +3,17 @@ const MessageRepository = require("../../../repository/message_repository");
 const UserRepository = require("../../../repository/user_repository");
 
 class MessageService {
+  
   sendMessage(sender, receiver, subject, bodyMessage) {
-    if (this.validateMessage(sender, receiver, subject, bodyMessage)) {
-      let newMessage = new Message(sender, receiver, subject, bodyMessage);
-      this.saveMessage(newMessage);
-      console.log('mensagem enviada');
-      console.log(MessageRepository.getAllMessage());
-      return true;
-    } else return false;
+    if (!(this.validateMessage(sender, receiver, subject, bodyMessage))) {
+      return false
+    }
+
+    let newMessage = new Message(sender, receiver, subject, bodyMessage);
+    this.saveMessage(newMessage);
+    console.log('mensagem enviada');
+    console.log(MessageRepository.getAllMessage());
+    return true;
     
   }
 
@@ -21,18 +24,22 @@ class MessageService {
       UserRepository.getUserNameByCode(message.getReceiver())
     );
   }
+  
   validateMessage(sender, receiver, subject, bodyMessage) {
-    if (this.verifyEmptyCamps(sender, receiver, subject, bodyMessage)) {
-      if (this.validateUsers(sender) && this.validateUsers(receiver)) {
-        try {
-          if (this.isSame(sender, receiver)) {
-            return true;
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      } else return false;
-    } else return false;
+    if (!(this.verifyEmptyCamps(sender, receiver, subject, bodyMessage))) {
+      return false;
+    } 
+
+    if (!(this.validateUsers(sender) && this.validateUsers(receiver))) {
+      return false
+    } 
+
+    if (!(this.isSame(sender, receiver))) {
+        return false;
+    }
+
+    return true;
+
   }
 
   verifyEmptyCamps(sender, receiver, subject, bodyMessage) {
@@ -43,7 +50,8 @@ class MessageService {
       bodyMessage.toString() === ""
     ) {
       return false;
-    } else return true;
+    } 
+    return true;
   }
 
   validateUsers(code) {

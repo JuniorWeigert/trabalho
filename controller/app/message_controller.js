@@ -1,11 +1,17 @@
 const MessageService = require("../../service/app/message/message_service");
-let messageService = new MessageService();
 
 class MessageController {
-  messageHandler(req, res) {
+  
+  constructor(){
+    this.messageService = new MessageService();
+
+  }
+
+  createNewMessage(req, res) {
     let messageData = req.body;
+    console.log(messageData)
     if (
-      messageService.sendMessage(
+      this.messageService.sendMessage(
         messageData.sender,
         messageData.receiver,
         messageData.subject,

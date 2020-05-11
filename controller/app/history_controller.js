@@ -1,11 +1,16 @@
-const HistoryService = require("../../service/app/history_service");
-const historyService = new HistoryService();
+const HistoryService = require("../../service/app/history/history_service");
 
 class HistoryController {
-  historyHandlerController(req, res) {
-    if (!historyService.historyHandler(req)) {
+
+  constructor(){
+    this.historyService = new HistoryService();
+  }
+
+
+  requestUserMessageHistory(req, res) {
+    if (!this.historyService.getUserHistoryMessages(req)) {
       return res.status(201).send("usuario não cadastrado ou não encontrado");
-    } else return res.status(200).send(historyService.historyHandler(req));
+    } else return res.status(200).send(this.historyService.getUserHistoryMessages(req));
   }
 }
 

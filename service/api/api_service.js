@@ -5,46 +5,51 @@ const axios = require("axios");
 //Link da API
 const URL = "https://foaas.com";
 //Instanciando classes
-let userService = new UserService();
-let messageService = new MessageService();
-let PATH = "";
 
-class apiService {
-  async apiHandler(req) {
-    if (this.validateUsers(req.body.sender, req.body.receiver)) {
-      await this.editPath(req);
+
+class ApiService {
+  constructor(){
+    this.userService = new UserService();
+    this.messageService = new MessageService();
+    this.PATH = "";
+  }
+
+  async makeApiRequest(req) {
+    if (!(this.validateUsers(req.body.sender, req.body.receiver))) {
+      return false;
     }
+    await this.editPath(req);
   }
   validateUsers(sender, receiver) {
     if (
-      userService.isRegistered(receiver) &&
-      userService.isRegistered(sender) &&
-      messageService.isSame(sender, receiver)
+      !(this.userService.isRegistered(receiver) &&
+      this.userService.isRegistered(sender) &&
+      this.messageService.isSame(sender, receiver))
     ) {
-      return true;
-    } else {
       return false;
     }
+      return true;
+    
   }
 
   editPath(req) {
-    let senderName = userService.getUserNameByCode(req.body.sender);
-    let receiverName = userService.getUserNameByCode(req.body.receiver);
+    let senderName = this.userService.getUserNameByCode(req.body.sender);
+    let receiverName = this.userService.getUserNameByCode(req.body.receiver);
     switch (req.body.message) {
       case "btn-awe":
-        PATH = `/awesome/${senderName}`;
+        this.PATH = `/awesome/${senderName}`;
         break;
       case "btn-off":
-        PATH = `/back/${receiverName}/${senderName}`;
+        this.PATH = `/back/${receiverName}/${senderName}`;
         break;
       case "btn-dicks":
-        PATH = `/bag/${senderName}`;
+        this.PATH = `/bag/${senderName}`;
         break;
       case "btn-bday":
-        PATH = `/bday/${receiverName}/${senderName}`;
+        this.PATH = `/bday/${receiverName}/${senderName}`;
         break;
       case "btn-why":
-        PATH = `/because/${senderName}`;
+        this.PATH = `/because/${senderName}`;
         break;
     }
 
@@ -54,21 +59,23 @@ class apiService {
   requestFoaas(req) {
     axios({
       method: "get",
-      url: URL + PATH
+      url: URL + this.PATH
     })
       .then(res => {
         console.log(res.data, res.status);
-        if (res.status === 200) {
-          messageService.sendMessage(
-            req.body.sender,
-            req.body.receiver,
-            req.body.subject,
-            res.data.message
-          );
-          return true;
-        } else {
-          return false;
-        }
+        
+        if (!(res.status === 200)) {
+          return false
+        } 
+
+        this.messageService.sendMessage(
+          req.body.sender,
+          req.body.receiver,
+          req.body.subject,
+          res.data.message
+        );
+        return true;
+
       })
       .catch(err => {
         console.log(err);
@@ -77,4 +84,4 @@ class apiService {
   }
 }
 
-module.exports = apiService;
+module.exports = ApiService;

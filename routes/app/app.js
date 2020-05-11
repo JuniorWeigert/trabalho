@@ -33,21 +33,21 @@ router.get("/api", (req, res) => {
 
 // Post para envio de mensagem
 router.post("/send", (req, res) => {
-  let message = new MessageController();
-  return message.messageHandler(req, res);
+  let messageController = new MessageController();
+  return messageController.createNewMessage(req, res);
 });
 
 // Post para cadastramento de Usuario
 router.post("/record", (req, res) => {
-  let user = new UserController();
-  return user.userHandler(req, res);
+  let userController = new UserController();
+  return userController.createNewUser(req, res);
 });
 
 // Post para busca de historico de mensagens
 router.post("/history", (req, res) => {
   console.log("chamando a controller");
-  let history = new HistoryController();
-  return history.historyHandlerController(req, res);
+  let historyController = new HistoryController();
+  return historyController.requestUserMessageHistory(req, res);
 });
 
 module.exports = router;
