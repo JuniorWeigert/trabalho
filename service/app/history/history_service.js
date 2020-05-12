@@ -3,8 +3,9 @@ const MessageRepository = require("../../../repository/message_repository");
 
 
 class HistoryService {
-  constructor(){
+  constructor() {
     this.userService = new UserService();
+    this.messageRepository = new MessageRepository();
   }
 
   getUserHistoryMessages(req) {
@@ -16,8 +17,8 @@ class HistoryService {
   findMessages(userCode) {
     let sendedMessages = [];
     let receivedMessages = [];
-    sendedMessages.push(MessageRepository.getMessageBySenderCode(userCode));
-    receivedMessages.push(MessageRepository.getMessageByReceiverCode(userCode));
+    sendedMessages.push(this.messageRepository.getMessageBySenderCode(userCode));
+    receivedMessages.push(this.messageRepository.getMessageByReceiverCode(userCode));
     let data = {
       sendedMessages,
       receivedMessages

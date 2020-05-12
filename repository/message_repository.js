@@ -1,47 +1,43 @@
+const inMemoryDatabase = require('../infrastructure/data/in_memory');
 class MessageRepository {
-  // INICIALIZADORES
-  static initialize() {
-    this._allMessages = [];
+
+
+  saveMessage(message) {    
+    inMemoryDatabase.messages.push(message);
   }
 
-  static saveMessage(message) {
-    this.setMessages(message);
-  }
-  static getAllMessage() {
-    return this._allMessages;
+  getAllMessage() {
+    return inMemoryDatabase.messages;
   }
 
-  static getMessageBySenderCode(code) {
+  getMessageBySenderCode(code) {
     let allUserSendedMesseges = [];
     for (let message of this.getAllMessage()) {
       console.log(message, code);
       if (message._sender.toString() === code.toString())
-      allUserSendedMesseges.push(message);
+        allUserSendedMesseges.push(message);
       else continue;
     }
     return allUserSendedMesseges;
   }
 
-  static getMessageByReceiverCode(code) {
+  getMessageByReceiverCode(code) {
     let allUserReceivedMesseges = [];
     for (let message of this.getAllMessage()) {
       if (message._receiver == code)
-      allUserReceivedMesseges.push(message);
+        allUserReceivedMesseges.push(message);
       else continue;
     }
     return allUserReceivedMesseges;
   }
 
-  static getMessageBySubject(subject) {
+  getMessageBySubject(subject) {
     for (let message of this.getAllMessage()) {
       if (message.getSubject() === subject) return message;
       else return false;
     }
   }
 
-  static setMessages(message) {
-    this._allMessages.push(message);
-  }
 }
 
 module.exports = MessageRepository;

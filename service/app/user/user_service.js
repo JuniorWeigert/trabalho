@@ -2,6 +2,11 @@ const User = require("../../../models/user/user");
 const UserRepository = require("../../../repository/user_repository");
 
 class UserService {
+
+  constructor() {
+      this.userRepository = new UserRepository();
+  }
+
   createUser(name, code) {
     // Valida dados do usuario
     if (!(this.validateNewUser(name, code))) {
@@ -14,12 +19,12 @@ class UserService {
   }
 
   getUserNameByCode(code){
-    return UserRepository.getUserNameByCode(code);
+    return this.userRepository.getUserNameByCode(code);
   }
 
   saveUser(user) {
     try{
-      UserRepository.saveUser(user);
+      this.userRepository.saveUser(user);
     } catch(err){
       console.log(err);
     }
@@ -34,7 +39,7 @@ class UserService {
       return false;
     }
 
-    if (UserRepository.getAllUsers().length < 1) {
+    if (this.userRepository.getAllUsers().length < 1) {
       return true;
     } 
     
@@ -44,9 +49,12 @@ class UserService {
 
     return true;
   }
-
+  
   isRegistered(code) {
-    return UserRepository.isRegistered(code) ? true : false;
+    let result = this.userRepository.getAllUsers().some((element) => {
+      return element.getCode().toString() === code.toString();
+    });
+    return result;
   }
 }
 
