@@ -8,7 +8,7 @@ btnSend.addEventListener("click", event => {
   if (verifyCamps()) {
     axios({
       method: "POST",
-      url: "http://localhost:3000/send",
+      url: "/send",
       data: {
         sender: sender.value,
         receiver: receiver.value,

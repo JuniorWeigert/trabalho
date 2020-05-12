@@ -7,7 +7,7 @@ btnSearch.addEventListener("click", event => {
   if (!(user.value === "")) {
     axios({
       method: "POST",
-      url: "http://localhost:3000/history",
+      url: "/history",
       data: {
         code: user.value
       },

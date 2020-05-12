@@ -6,7 +6,7 @@ btnRecord.addEventListener("click", event => {
   if (!(name.value === "" || code.value === "")) {
     axios({
       method: "POST",
-      url: "http://localhost:3000/record",
+      url: "/record",
       data: {
         name: name.value,
         code: code.value

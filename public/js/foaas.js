@@ -8,7 +8,7 @@ elements.forEach(btn => {
     if (verifyCamps()) {
       axios({
         method: "POST",
-        url: "http://localhost:3000/api",
+        url: "/api",
         data: {
           sender: sender.value,
           receiver: receiver.value,

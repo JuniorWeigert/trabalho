@@ -2,12 +2,11 @@ const Express = require("express");
 const appRouter = require("./routes/app/app");
 const apiRouter = require("./routes/api/api");
 const bodyParser = require("body-parser");
-const userRepository = require('./repository/user_repository');
-const messageRepository = require('./repository/message_repository');
+const inMemoryDatabase = require('./infrastructure/data/in_memory');
+
 const app = Express();
 
-messageRepository.initialize();
-userRepository.initialize();
+inMemoryDatabase.initialize();
 
 app.use(
   bodyParser.urlencoded({
@@ -23,6 +22,6 @@ app.set("view engine", "html");
 
 app.set("views", "./public/views");
 
-app.listen(3000, () => {
+app.listen(3435, () => {
   console.log("Rodando");
 });
